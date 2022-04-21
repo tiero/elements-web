@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -48,6 +49,7 @@ func main() {
 		}
 		tmpl.Execute(w, data)
 	})
+	fmt.Println("Listening on port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatalln("error starting http server: %w", err)
 	}

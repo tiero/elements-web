@@ -40,10 +40,10 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image
+      - name: Build & push image
         run:  >-
           docker buildx build --push 
           --file ./Dockerfile 
-          --tag ghcr.io/vulpemventures/$IMAGE_NAME:latest 
-          --tag ghcr.io/vulpemventures/$IMAGE_NAME:${{ steps.next_tag.outputs.tag }} 
+          --tag ghcr.io/tiero/$IMAGE_NAME:latest 
+          --tag ghcr.io/tiero/$IMAGE_NAME:${{ steps.next_tag.outputs.tag }} 
           --platform linux/arm64,linux/amd64 .

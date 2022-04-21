@@ -11,11 +11,9 @@ type GetBlockchainInfoResponse struct {
 	Blocks               int     `json:"blocks"`
 	Headers              int     `json:"headers"`
 	BestBlockHash        string  `json:"bestblockhash"`
-	Difficulty           float64 `json:"difficulty"`
 	MedianTime           int     `json:"mediantime"`
 	VerificationProgress float64 `json:"verificationprogress"`
 	InitialBlockDownload bool    `json:"initialblockdownload"`
-	ChainWork            string  `json:"chainwork"`
 	SizeOnDisk           int     `json:"size_on_disk"`
 	Pruned               bool    `json:"pruned"`
 }
