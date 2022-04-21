@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elements Core Web UI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title is-1">{{.Title}}</h1>
+      <h1 class="title is-4">Connect</h1>
+      <div class="box">
+        <div class="content">
+          <strong>Host:</strong> {{.ConnectionDetails.RpcHost}}<br>
+          <strong>Port:</strong> {{.ConnectionDetails.RpcPort}}<br>
+          <strong>Username:</strong> {{.ConnectionDetails.RpcUser}}<br>
+          <strong>Password:</strong> {{.ConnectionDetails.RpcPass}}<br>
+        </div>
+      </div>
+      <h1 class="title is-4">Blockchain info</h1>
+      <div class="box">
+        <div class="content">
+          <strong>Chain</strong>: {{.BlockchainInfo.Chain}}<br>
+          <strong>Blocks</strong>: {{.BlockchainInfo.Blocks}}<br>
+          <strong>Headers</strong>: {{.BlockchainInfo.Headers}}<br>
+          <strong>Best block hash</strong>: {{.BlockchainInfo.BestBlockHash}}<br>
+          <strong>Difficulty</strong>: {{.BlockchainInfo.Difficulty}}<br>
+          <strong>Median time</strong>: {{.BlockchainInfo.MedianTime}}<br>
+          <strong>Verification progress</strong>: {{.BlockchainInfo.VerificationProgress}}<br>
+          <strong>Initial block download</strong>: {{.BlockchainInfo.InitialBlockDownload}}<br>
+          <strong>Chain work</strong>: {{.BlockchainInfo.ChainWork}}<br>
+          <strong>Size on disk</strong>: {{.BlockchainInfo.SizeOnDisk}}<br>
+          <strong>Version</strong>: {{.BlockchainInfo.Version}}<br>
+          <strong>Subversion</strong>: {{.BlockchainInfo.SubVersion}}<br>
+          <strong>Errors</strong>: {{.BlockchainInfo.Errors}}<br>
+        </div>
+        <div class="content">
+          <h2 class="title is-5">Initial Block Download</h2>
+          <p class="subtile">{{.BlockchainInfo.InitialBlockDownload}}</p>
+        </div>
+        <div class="content">
+          <h2 class="title is-5">Verification Progress</h2>
+          <p class="subtile">{{.BlockchainInfo.VerificationProgress}}</p>
+        </div>
+        <div class="content">
+          <h2 class="title is-5">Best Block Hash</h2>
+          <p class="subtile">{{.BlockchainInfo.BestBlockHash}}</p>
+        </div>
+        <div class="content">
+          <h2 class="title is-5">Blocks</h2>
+          <p class="subtile">{{.BlockchainInfo.Blocks}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Elements Core Web UI</strong> by <a href="Marco Argentieri">Marco Argentieri</a>. The <a href="https://github.com/tiero/elements-web" target="_blank">source code is MIT licensed</a> 
+  </footer>
+</body>
+</html>
