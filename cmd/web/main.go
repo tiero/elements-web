@@ -9,12 +9,13 @@ import (
 )
 
 type ConnectionDetails struct {
-	RpcUser    string
-	RpcPass    string
-	RpcHost    string
-	RpcPort    string
-	RemoteHost string
-	P2PPort    string
+	RpcUser       string
+	RpcPass       string
+	RpcHost       string
+	RpcPort       string
+	P2PPort       string
+	RemoteRpcHost string
+	RemoteP2PHost string
 }
 
 type Page struct {
@@ -26,12 +27,13 @@ type Page struct {
 func main() {
 
 	details := &ConnectionDetails{
-		RpcUser:    os.Getenv("RPC_USER"),
-		RpcPass:    os.Getenv("RPC_PASS"),
-		RpcHost:    os.Getenv("RPC_HOST"),
-		RpcPort:    os.Getenv("RPC_PORT"),
-		P2PPort:    os.Getenv("P2P_PORT"),
-		RemoteHost: os.Getenv("REMOTE_HOST"),
+		RpcUser:       os.Getenv("RPC_USER"),
+		RpcPass:       os.Getenv("RPC_PASS"),
+		RpcHost:       os.Getenv("RPC_HOST"),
+		RpcPort:       os.Getenv("RPC_PORT"),
+		P2PPort:       os.Getenv("P2P_PORT"),
+		RemoteRpcHost: os.Getenv("REMOTE_RPC_HOST"),
+		RemoteP2PHost: os.Getenv("REMOTE_P2P_HOST"),
 	}
 
 	client, err := NewClient(details.RpcHost, details.RpcPort, details.RpcUser, details.RpcPass, false, 30)
