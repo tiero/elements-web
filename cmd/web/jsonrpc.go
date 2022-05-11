@@ -74,7 +74,6 @@ func NewClient(host string, port string, user, passwd string, useSSL bool, timeo
 	}
 
 	serverAddr := fmt.Sprintf("%s%s:%s", protocol, host, port)
-	fmt.Println("address:", serverAddr)
 	c = &RPCClient{serverAddr: serverAddr, user: user, passwd: passwd, httpClient: httpClient, timeout: timeout}
 	return
 }

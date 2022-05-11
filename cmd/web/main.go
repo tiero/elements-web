@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"text/template"
 )
 
 type ConnectionDetails struct {
@@ -25,8 +24,49 @@ type Page struct {
 }
 
 func main() {
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/", serveTemplate)
 
-	details := &ConnectionDetails{
+	log.Println("Listening on http://localshot:8080")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func serveTemplate(w http.ResponseWriter, r *http.Request) {
+
+	details := detailsFromEnv()
+	blockInfo, err := getBlockchainInfo(details)
+	if err != nil {
+		log.Fatalf("jsonrpc: %v", err)
+	}
+
+	tmpl, err := template.ParseFiles("layout.html")
+	if err != nil {
+		// Log the detailed error
+		log.Println(err.Error())
+		// Return a generic "Internal Server Error" message
+		http.Error(w, http.StatusText(500), 500)
+		return
+	}
+
+	data := Page{
+		Title:             "Elements Core",
+		ConnectionDetails: details,
+		BlockchainInfo:    blockInfo,
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Fatalln(err.Error())
+		http.Error(w, http.StatusText(500), 500)
+	}
+}
+
+func detailsFromEnv() *ConnectionDetails {
+	return &ConnectionDetails{
 		RpcUser:       os.Getenv("RPC_USER"),
 		RpcPass:       os.Getenv("RPC_PASS"),
 		RpcHost:       os.Getenv("RPC_HOST"),
@@ -35,28 +75,18 @@ func main() {
 		RemoteRpcHost: os.Getenv("REMOTE_RPC_HOST"),
 		RemoteP2PHost: os.Getenv("REMOTE_P2P_HOST"),
 	}
+}
 
+func getBlockchainInfo(details *ConnectionDetails) (*GetBlockchainInfoResponse, error) {
 	client, err := NewClient(details.RpcHost, details.RpcPort, details.RpcUser, details.RpcPass, false, 30)
 	if err != nil {
-		log.Fatalf("jsonrpc: %v", err)
+		return nil, err
 	}
 	service := &Elements{client}
 	response, err := service.getBlockchainInfo()
 	if err != nil {
-		log.Fatalf("jsonrpc: %v", err)
+		return nil, err
 	}
 
-	tmpl := template.Must(template.ParseFiles("layout.html"))
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		data := Page{
-			Title:             "Elements Core",
-			ConnectionDetails: details,
-			BlockchainInfo:    response,
-		}
-		tmpl.Execute(w, data)
-	})
-	fmt.Println("Listening on port 8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatalln("error starting http server: %w", err)
-	}
+	return response, nil
 }

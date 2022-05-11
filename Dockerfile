@@ -16,6 +16,7 @@ FROM debian:buster-slim
 COPY --from=builder /bin/web .
 
 COPY layout.html .
+ADD static /static
 
 EXPOSE 8080
 
